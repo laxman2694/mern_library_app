@@ -61,8 +61,8 @@ const BooksList = () => {
 
     const handleFilter = () => {
       confirmAlert({
-        title: "Filter Book",
-        message: "Are you sure to do this.",
+        title: "Filter Book By",
+        message: "",
         buttons: [
           {
             label: "Books created within 10min ago",
@@ -77,13 +77,17 @@ const BooksList = () => {
         ],
       });
     };
+
     content = (
       <>
         <div
           style={{
+            flexDirection: "row",
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "center",
+            marginTop: 10,
+            marginBottom: 10,
           }}
         >
           <button

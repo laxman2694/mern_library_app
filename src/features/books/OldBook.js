@@ -78,13 +78,7 @@ const OldBook = ({ bookId, isViewAll, isViewer }) => {
                 .fromNow()
                 .indexOf(" ")
             )
-        ) > 10 ||
-        moment(
-          moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
-        ).fromNow() === "a minute ago" ||
-        moment(
-          moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
-        ).fromNow() === "a few seconds ago"
+        ) > 10
       ) {
         return true;
       } else {

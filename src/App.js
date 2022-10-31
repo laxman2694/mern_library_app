@@ -21,7 +21,7 @@ import EditBook from "./features/books/EditBook";
 import OldBooksList from "./features/books/OldBooksList";
 import NewLatestBooksList from "./features/books/NewLatestBooksList";
 function App() {
-  useTitle("Dan D. Repairs");
+  useTitle("D Library");
 
   return (
     <Routes>

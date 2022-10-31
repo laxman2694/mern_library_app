@@ -5,7 +5,7 @@ import { useGetbooksQuery, useDeleteBookMutation } from "./booksApiSlice";
 import { memo } from "react";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-const Book = ({ bookId, isViewAll, isViewer }) => {
+const Book = ({ bookId, isViewAll, isViewer, filterType }) => {
   const navigate = useNavigate();
   const { book } = useGetbooksQuery("booksList", {
     selectFromResult: ({ data }) => ({
@@ -50,38 +50,41 @@ const Book = ({ bookId, isViewAll, isViewer }) => {
         ],
       });
     };
+
     return (
       <>
-        <tr className="table__row">
-          <td className="table__cell">{book.pages}</td>
-          <td className="table__cell note__created">{created}</td>
-          <td className="table__cell note__updated">{updated}</td>
-          <td className="table__cell note__title">{book.name}</td>
-          <td className="table__cell note__username">{book.author}</td>
+        {1 && (
+          <tr className="table__row">
+            <td className="table__cell">{book.pages}</td>
+            <td className="table__cell note__created">{created}</td>
+            <td className="table__cell note__updated">{updated}</td>
+            <td className="table__cell note__title">{book.name}</td>
+            <td className="table__cell note__username">{book.author}</td>
 
-          <td className={isViewAll || isViewer ? "" : "table__cell"}>
-            {!isViewAll && (
-              <>
-                <button
-                  className="icon-button table__button"
-                  onClick={handleEdit}
-                >
-                  <FontAwesomeIcon icon={faPenToSquare} />
-                </button>
-                <button
-                  className="icon-button table__button"
-                  title="Delete"
-                  onClick={() => {
-                    submit(book);
-                  }}
-                >
-                  {" "}
-                  <FontAwesomeIcon icon={faTrashCan} />
-                </button>
-              </>
-            )}
-          </td>
-        </tr>
+            <td className={isViewAll || isViewer ? "" : "table__cell"}>
+              {!isViewAll && (
+                <>
+                  <button
+                    className="icon-button table__button"
+                    onClick={handleEdit}
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </button>
+                  <button
+                    className="icon-button table__button"
+                    title="Delete"
+                    onClick={() => {
+                      submit(book);
+                    }}
+                  >
+                    {" "}
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </button>
+                </>
+              )}
+            </td>
+          </tr>
+        )}
       </>
     );
   } else return null;

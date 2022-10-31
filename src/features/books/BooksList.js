@@ -1,12 +1,18 @@
 import { useGetbooksQuery } from "./booksApiSlice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Book from "./Book";
 import useAuth from "../../hooks/useAuth";
 import useTitle from "../../hooks/useTitle";
 import PulseLoader from "react-spinners/PulseLoader";
+import { useNavigate } from "react-router-dom";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import React from "react";
 const BooksList = () => {
+  const navigate = useNavigate();
   useTitle("techbooks: Books List");
-
   const { username, isManager, isAdmin, isCreator, isViewAll, isViewer } =
     useAuth();
 
@@ -49,38 +55,77 @@ const BooksList = () => {
           isViewAll={isViewAll}
           key={bookId}
           bookId={bookId}
+          filterType={""}
         />
       ));
 
+    const handleFilter = () => {
+      confirmAlert({
+        title: "Filter Book",
+        message: "Are you sure to do this.",
+        buttons: [
+          {
+            label: "Books created within 10min ago",
+            onClick: () => navigate("old"),
+          },
+          {
+            label: "Books created within 10min",
+            onClick: () => {
+              navigate("latest");
+            },
+          },
+        ],
+      });
+    };
     content = (
-      <table className="table table--notes">
-        <thead className="table__thead">
-          <tr>
-            <th scope="col" className="table__th note__status">
-              Pages
-            </th>
-            <th scope="col" className="table__th note__created">
-              Created
-            </th>
-            <th scope="col" className="table__th note__updated">
-              Updated
-            </th>
-            <th scope="col" className="table__th note__title">
-              Book Name
-            </th>
-            <th scope="col" className="table__th note__username">
-              Author Name
-            </th>
-            <th
-              scope="col"
-              className={isViewAll || isViewer ? "" : "table__th note__edit"}
-            >
-              {isViewAll || isViewer ? "" : "Edit"}
-            </th>
-          </tr>
-        </thead>
-        <tbody>{tableContent}</tbody>
-      </table>
+      <>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+          }}
+        >
+          <button
+            className="icon-button table__button"
+            title="Filter"
+            onClick={() => {
+              handleFilter();
+            }}
+          >
+            <FontAwesomeIcon color="white" icon={faFilter} />
+          </button>
+        </div>
+
+        <table className="table table--notes">
+          <thead className="table__thead">
+            <tr>
+              <th scope="col" className="table__th note__status">
+                Pages
+              </th>
+              <th scope="col" className="table__th note__created">
+                Created
+              </th>
+              <th scope="col" className="table__th note__updated">
+                Updated
+              </th>
+              <th scope="col" className="table__th note__title">
+                Book Name
+              </th>
+              <th scope="col" className="table__th note__username">
+                Author Name
+              </th>
+              <th
+                scope="col"
+                className={isViewAll || isViewer ? "" : "table__th note__edit"}
+              >
+                {isViewAll || isViewer ? "" : "Edit"}
+              </th>
+            </tr>
+          </thead>
+          <tbody>{tableContent}</tbody>
+        </table>
+      </>
     );
   }
 

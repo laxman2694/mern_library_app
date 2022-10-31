@@ -141,18 +141,8 @@ const NewLatesBook = ({ bookId, isViewAll, isViewer }) => {
             <td className="table__cell">{book.pages}</td>
             <td className="table__cell note__created">{created}</td>
             <td className="table__cell note__updated">{updated}</td>
-            <td className="table__cell note__title">
-              {book.name +
-                moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
-                  .fromNow()
-                  .includes("day")}
-            </td>
-            <td className="table__cell note__username">
-              {book.author +
-                moment(
-                  moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
-                ).fromNow()}
-            </td>
+            <td className="table__cell note__title">{book.name}</td>
+            <td className="table__cell note__username">{book.author}</td>
 
             <td className={isViewAll || isViewer ? "" : "table__cell"}>
               {!isViewAll && (

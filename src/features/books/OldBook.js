@@ -51,26 +51,49 @@ const OldBook = ({ bookId, isViewAll, isViewer }) => {
         ],
       });
     };
+    const getOldBooks = () => {
+      let old =
+        moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+          .fromNow()
+          .includes("day") ||
+        moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+          .fromNow()
+          .includes("hours") ||
+        moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+          .fromNow()
+          .includes("year") ||
+        moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+          .fromNow()
+          .includes("years");
+
+      if (old) {
+        return false;
+      } else if (
+        Number(
+          moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+            .fromNow()
+            .substring(
+              0,
+              moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+                .fromNow()
+                .indexOf(" ")
+            )
+        ) > 10 ||
+        moment(
+          moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
+        ).fromNow() === "a minute ago" ||
+        moment(
+          moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
+        ).fromNow() === "a few seconds ago"
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    };
     return (
       <>
-        {!(
-          Number(
-            moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
-              .fromNow()
-              .substring(
-                0,
-                moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
-                  .fromNow()
-                  .indexOf(" ")
-              )
-          ) < 10 ||
-          moment(
-            moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
-          ).fromNow() === "a minute ago" ||
-          moment(
-            moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
-          ).fromNow() === "a few seconds ago"
-        ) && (
+        {getOldBooks() && (
           <tr className="table__row">
             <td className="table__cell">{book.pages}</td>
             <td className="table__cell note__created">{created}</td>

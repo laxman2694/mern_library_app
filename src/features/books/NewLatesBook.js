@@ -51,9 +51,25 @@ const NewLatesBook = ({ bookId, isViewAll, isViewer }) => {
         ],
       });
     };
-    return (
-      <>
-        {(Number(
+    const getNewBooks = () => {
+      let jw =
+        moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+          .fromNow()
+          .includes("day") ||
+        moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+          .fromNow()
+          .includes("hours") ||
+        moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+          .fromNow()
+          .includes("year") ||
+        moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+          .fromNow()
+          .includes("years");
+
+      if (jw) {
+        return false;
+      } else if (
+        Number(
           moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
             .fromNow()
             .substring(
@@ -63,18 +79,80 @@ const NewLatesBook = ({ bookId, isViewAll, isViewer }) => {
                 .indexOf(" ")
             )
         ) < 10 ||
-          moment(
-            moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
-          ).fromNow() === "a minute ago" ||
-          moment(
-            moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
-          ).fromNow() === "a few seconds ago") && (
+        moment(
+          moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
+        ).fromNow() === "a minute ago" ||
+        moment(
+          moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
+        ).fromNow() === "a few seconds ago"
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+
+      // let t1 =
+      //   Number(
+      //     moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+      //       .fromNow()
+      //       .substring(
+      //         0,
+      //         moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+      //           .fromNow()
+      //           .indexOf(" ")
+      //       )
+      //   ) < 10;
+
+      // let t2 =
+      //   moment(
+      //     moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
+      //   ).fromNow() === "a minute ago";
+      // let t3 =
+      //   moment(
+      //     moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
+      //   ).fromNow() === "a few seconds ago";
+      // console.log("t1", t1, t2, t3);
+      // t1 = false;
+      // let res =
+      //   Number(
+      //     moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+      //       .fromNow()
+      //       .substring(
+      //         0,
+      //         moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+      //           .fromNow()
+      //           .indexOf(" ")
+      //       )
+      //   ) < 10 ||
+      //   moment(
+      //     moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
+      //   ).fromNow() === "a minute ago" ||
+      //   moment(
+      //     moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
+      //   ).fromNow() === "a few seconds ago";
+
+      // console.log("sdf,bsdjkjfhs", res);
+      // return 1;
+    };
+    return (
+      <>
+        {getNewBooks() && (
           <tr className="table__row">
             <td className="table__cell">{book.pages}</td>
             <td className="table__cell note__created">{created}</td>
             <td className="table__cell note__updated">{updated}</td>
-            <td className="table__cell note__title">{book.name}</td>
-            <td className="table__cell note__username">{book.author}</td>
+            <td className="table__cell note__title">
+              {book.name +
+                moment(moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss"))
+                  .fromNow()
+                  .includes("day")}
+            </td>
+            <td className="table__cell note__username">
+              {book.author +
+                moment(
+                  moment(book.createdAt).format("YYYY-MM-DD HH:mm:ss")
+                ).fromNow()}
+            </td>
 
             <td className={isViewAll || isViewer ? "" : "table__cell"}>
               {!isViewAll && (

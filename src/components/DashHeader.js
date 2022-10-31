@@ -130,7 +130,7 @@ const DashHeader = () => {
       <header className="dash-header">
         <div className={`dash-header__container ${dashClass}`}>
           <Link to="/dash">
-            <h1 className="dash-header__title">Library</h1>
+            <h1 className="dash-header__title">D-Library</h1>
           </Link>
           <nav className="dash-header__nav">{buttonContent}</nav>
         </div>
